@@ -1,9 +1,18 @@
 from fastapi import Depends, FastAPI, HTTPException, status
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel
+from sqlalchemy.future import select
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import Session
+import bcrypt
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+import os
+from typing import Optional
 
 SECRET_KEY = "83daa0256a2289b0fb23693bf1f6034d44396675749244721a2b20e896e11662"
 ALGORITHM = "HS256"
